@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bot_menu_konversi"
+        android:title="Konversi"
+        android:icon="@drawable/baseline_home_24"/>
+    <item
+        android:id="@+id/bot_menu_Calculator"
+        android:title="Calculator"
+        android:icon="@drawable/baseline_architecture_24"/>
+    <item
+        android:id="@+id/bot_menu_suhu"
+        android:title="Temprature"
+        android:icon="@drawable/baseline_device_thermostat_24"/>
+
+    <item
+        android:id="@+id/bot_menu_bmi"
+        android:title="BMI"
+        android:icon="@drawable/baseline_monitor_weight_24"/>
+
+</menu>
+
