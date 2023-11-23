@@ -64,6 +64,8 @@ class   FKalkulator : Fragment() {
         binding.btn8.setOnClickListener { onDigitClick(binding.btn8) }
         binding.btn9.setOnClickListener { onDigitClick(binding.btn9) }
         binding.btn0.setOnClickListener { onDigitClick(binding.btn0) }
+        binding.btnBuka.setOnClickListener { onDigitClick(binding.btnBuka) }
+        binding.btnTutup.setOnClickListener { onDigitClick(binding.btnTutup) }
 
         binding.btnTambah.setOnClickListener { onOperatorClick(binding.btnTambah) }
         binding.btnKurang.setOnClickListener { onOperatorClick(binding.btnKurang) }
@@ -106,13 +108,50 @@ class   FKalkulator : Fragment() {
     }
 
     private fun onOperatorClick(view: View) {
-        if (!stateError && lastNumeric) {
-            binding.inputKalk.append((view as Button).text)
-            lastDot = false
-            lastNumeric = false
-            onEqual()
+        if (!stateError) {
+            val operator = (view as Button).text.toString()
+
+            when (operator) {
+                "(" -> {
+                    if (lastNumeric) {
+                        binding.inputKalk.append(" $operator ")
+                        lastNumeric = false
+                        lastDot = false
+                    } else {
+                        binding.inputKalk.append(operator)
+                    }
+                }
+                ")" -> {
+                    if (lastNumeric) {
+                        binding.inputKalk.append(" $operator ")
+                        lastNumeric = false
+                        lastDot = false
+                        onEqual()
+                    }
+                }
+                "x" -> {
+                    binding.inputKalk.append(" * ")
+                    lastNumeric = false
+                    lastDot = false
+                }
+                ":" -> {
+                    binding.inputKalk.append(" / ")
+                    lastNumeric = false
+                    lastDot = false
+                }
+                else -> {
+                    binding.inputKalk.append(" $operator ")
+                    lastNumeric = false
+                    lastDot = false
+                }
+            }
         }
     }
+
+
+
+
+
 
     private fun onBackClick() {
         binding.inputKalk.text = binding.inputKalk.text.toString().dropLast(1)
@@ -123,7 +162,7 @@ class   FKalkulator : Fragment() {
             }
         } catch (e: Exception) {
             binding.hasilInput.text = ""
-            binding.hasilInput.visibility = View.GONE
+           
             Log.e("last char error", e.toString())
         }
     }
@@ -133,7 +172,15 @@ class   FKalkulator : Fragment() {
             val txt = binding.inputKalk.text.toString().trim()
 
             if (txt.isNotEmpty()) {
-                expression = ExpressionBuilder(txt).build()
+                // Replace 'x' with '*' and ':' with '/'
+                // Ganti 'X' dengan '*'
+                val modifiedTxt = txt.replace("X", "*").replace(":", "/")
+
+
+                // Log the expression before evaluation
+                Log.d("Ekspresi", "Ekspresi sebelum evaluasi: $modifiedTxt")
+
+                expression = ExpressionBuilder(modifiedTxt).build()
 
                 try {
                     val result = expression.evaluate()
@@ -151,6 +198,8 @@ class   FKalkulator : Fragment() {
             }
         }
     }
+
+
 
 
     companion object {

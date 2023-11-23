@@ -3,6 +3,7 @@ package com.example.apputs
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.apputs.databinding.ActivityProfilViewBinding
 
@@ -51,5 +52,23 @@ class profil_view : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.btnExit.setOnClickListener {
+            showLogoutConfirmationDialog()
+        }
+
+    }
+    private fun showLogoutConfirmationDialog() {
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Logout")
+        alertDialog.setMessage("Are you sure you want to log out?")
+        alertDialog.setPositiveButton("Yes") { _, _ ->
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        alertDialog.setNegativeButton("No") { _, _ ->
+
+        }
+        alertDialog.show()
     }
 }
